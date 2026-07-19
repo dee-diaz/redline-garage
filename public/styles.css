@@ -164,17 +164,6 @@ button {
   color: var(--color-ink-black);
 }
 
-.nav-account-link {
-  font-size: var(--text-caption);
-  font-weight: 500;
-  color: var(--color-ash);
-  text-transform: lowercase;
-}
-
-.nav-account-link:hover {
-  color: var(--color-ink-black);
-}
-
 /* Section header with carousel arrows */
 .listing-toolbar {
   display: flex;
@@ -291,6 +280,14 @@ button {
   gap: var(--spacing-4);
 }
 
+.record-card-category {
+  font-family: var(--font-space-mono);
+  letter-spacing: 0;
+  font-size: 12px;
+  color: var(--color-ash);
+  text-transform: uppercase;
+}
+
 .record-card-title {
   font-size: var(--text-body-lg);
   font-weight: 600;
@@ -380,9 +377,12 @@ button {
     flex-wrap: wrap;
   }
 
-  .nav-links {
+  .nav-primary {
     order: 3;
     width: 100%;
+  }
+
+  .nav-links {
     justify-content: center;
     overflow-x: auto;
   }
