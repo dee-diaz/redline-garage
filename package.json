@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app",
-    "db": "psql -U postgres -d auto_shop"
+    "db": "psql -U postgres -d auto_shop",
+    "seed": "node db/populatedb.js"
   },
   "repository": {
     "type": "git",
