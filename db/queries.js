@@ -7,11 +7,20 @@ async function getFeaturedProducts() {
     LEFT JOIN categories ON items.category_id = categories.id
     LEFT JOIN brands ON items.brand_id = brands.id
     WHERE items.stock < 6
-    LIMIT 16
+    LIMIT 16;
   `);
+  return rows;
+}
+
+async function getCategories() {
+  const { rows } = await pool.query(
+    'SELECT name, description FROM categories ORDER BY name;',
+  );
+
   return rows;
 }
 
 module.exports = {
   getFeaturedProducts,
+  getCategories,
 };
