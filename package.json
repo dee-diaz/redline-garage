@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon app",
     "db": "psql -U postgres -d auto_shop",
-    "seed": "node db/populatedb.js"
+    "seed": "node db/populatedb.js",
+    "images": "node db/fetchProductImages.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,8 @@
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
-    "pg": "^8.22.0"
+    "pg": "^8.22.0",
+    "sharp": "^0.35.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
