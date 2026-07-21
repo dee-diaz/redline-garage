@@ -24,126 +24,38 @@
   </header>
 
   <main>
+    <%- include("partials/errors.ejs") %>
     <div class="page-container">
       <div class="listing-toolbar">
-        <h2 class="listing-toolbar-title">products</h2>
-        <div class="listing-toolbar-actions">
-          <button type="button" class="carousel-arrow" aria-label="Previous">
-            <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-          </button>
-          <button type="button" class="carousel-arrow" aria-label="Next">
-            <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
+        <h2 class="listing-toolbar-title">featured products</h2>
       </div>
 
       <div class="listing-grid">
-        <article class="record-card">
-          <span class="record-card-badge record-card-badge--new">new in</span>
-          <div class="record-card-image"></div>
-          <div class="record-card-meta">
-            <div class="record-card-thumb"></div>
-            <div class="record-card-info">
-              <p class="record-card-category">category name</p>
-              <h3 class="record-card-title">product name</h3>
-              <p class="record-card-subtitle">by brand name</p>
-              <p class="record-card-price">$0.00</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="record-card">
-          <div class="record-card-image"></div>
-          <div class="record-card-meta">
-            <div class="record-card-thumb"></div>
-            <div class="record-card-info">
-              <p class="record-card-category">category name</p>
-              <h3 class="record-card-title">product name</h3>
-              <p class="record-card-subtitle">by brand name</p>
-              <p class="record-card-price">$0.00</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="record-card">
-          <span class="record-card-badge record-card-badge--sold-out">sold out</span>
-          <div class="record-card-image"></div>
-          <div class="record-card-meta">
-            <div class="record-card-thumb"></div>
-            <div class="record-card-info">
-              <p class="record-card-category">category name</p>
-              <h3 class="record-card-title">product name</h3>
-              <p class="record-card-subtitle">by brand name</p>
-              <p class="record-card-price">$0.00</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="record-card">
-          <div class="record-card-image"></div>
-          <div class="record-card-meta">
-            <div class="record-card-thumb"></div>
-            <div class="record-card-info">
-              <p class="record-card-category">category name</p>
-              <h3 class="record-card-title">product name</h3>
-              <p class="record-card-subtitle">by brand name</p>
-              <p class="record-card-price">$0.00</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="record-card">
-          <span class="record-card-badge record-card-badge--new-color">new color</span>
-          <div class="record-card-image"></div>
-          <div class="record-card-meta">
-            <div class="record-card-thumb"></div>
-            <div class="record-card-info">
-              <p class="record-card-category">category name</p>
-              <h3 class="record-card-title">product name</h3>
-              <p class="record-card-subtitle">by brand name</p>
-              <p class="record-card-price">$0.00</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="record-card">
-          <div class="record-card-image"></div>
-          <div class="record-card-meta">
-            <div class="record-card-thumb"></div>
-            <div class="record-card-info">
-              <p class="record-card-category">category name</p>
-              <h3 class="record-card-title">product name</h3>
-              <p class="record-card-subtitle">by brand name</p>
-              <p class="record-card-price">$0.00</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="record-card">
-          <div class="record-card-image"></div>
-          <div class="record-card-meta">
-            <div class="record-card-thumb"></div>
-            <div class="record-card-info">
-              <p class="record-card-category">category name</p>
-              <h3 class="record-card-title">product name</h3>
-              <p class="record-card-subtitle">by brand name</p>
-              <p class="record-card-price">$0.00</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="record-card">
-          <div class="record-card-image"></div>
-          <div class="record-card-meta">
-            <div class="record-card-thumb"></div>
-            <div class="record-card-info">
-              <p class="record-card-category">category name</p>
-              <h3 class="record-card-title">product name</h3>
-              <p class="record-card-subtitle">by brand name</p>
-              <p class="record-card-price">$0.00</p>
-            </div>
-          </div>
-        </article>
+        <% if(featuredProducts.length > 0) { %>
+          <% featuredProducts.forEach(function(product) { %>
+            <article class="record-card">
+              <% if (product.stock < 3 && product.stock > 0) { %>
+                <span class="record-card-badge record-card-badge--low-stock">low stock</span>
+              <% } %>
+              <% if (product.stock === 0) { %>
+                <span class="record-card-badge record-card-badge--no-stock">out of stock</span>
+              <% } %>
+              <div class="record-card-image">
+                <img src="<%= product.image %>" alt="">
+              </div>
+              <div class="record-card-meta">
+                <div class="record-card-info">
+                  <p class="record-card-category"><%= product.category %></p>
+                  <h3 class="record-card-title"><%= product.name %></h3>
+                  <p class="record-card-subtitle"><%= product.brand %></p>
+                  <p class="record-card-price"><%= product.price %></p>
+                </div>
+              </div>
+            </article>
+          <% }) %>
+        <% } else { %>
+          <p class="empty-state">couldn't load products right now</p>
+        <% } %>
       </div>
 
       <div class="listing-footer">
