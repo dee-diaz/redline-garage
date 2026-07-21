@@ -106,6 +106,35 @@ button {
   stroke-width: 1.5;
 }
 
+/* Form errors */
+.errors {
+  background: var(--color-pure-white);
+  border: 1px solid var(--color-ink-black);
+  border-radius: var(--radius-cards);
+  padding: var(--spacing-16) var(--spacing-20);
+  margin: var(--spacing-24) var(--spacing-40) 0;
+}
+
+.errors__title {
+  font-size: var(--text-body-lg);
+  font-weight: 600;
+  color: var(--color-ink-black);
+  text-transform: lowercase;
+  margin-bottom: var(--spacing-8);
+}
+
+.errors ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.errors li {
+  font-size: var(--text-caption);
+  color: var(--color-ash);
+}
+
 /* Main navigation */
 .navbar {
   background: var(--color-pure-white);
@@ -230,19 +259,15 @@ button {
   z-index: 1;
 }
 
-.record-card-badge--new {
+
+.record-card-badge--low-stock {
   background: var(--color-electric-cobalt);
   color: var(--color-pure-white);
 }
 
-.record-card-badge--sold-out {
+.record-card-badge--no-stock {
   background: var(--color-slate);
   color: var(--color-pure-white);
-}
-
-.record-card-badge--new-color {
-  background: var(--color-pale-iris);
-  color: var(--color-ink-black);
 }
 
 .record-card-image {
@@ -305,9 +330,18 @@ button {
 .record-card-price {
   font-family: var(--font-space-mono);
   letter-spacing: 0;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--color-ink-black);
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: var(--spacing-48) 0;
+  font-size: var(--text-body-lg);
+  color: var(--color-ash);
+  text-transform: lowercase;
 }
 
 /* See all */
