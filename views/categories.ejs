@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("partials/head.ejs") %>
+  </head>
+  <body>
+    <%- include("partials/header.ejs") %>
+
+    <main>
+      <%- include("partials/errors.ejs") %>
+      <div class="page-container">
+        <div class="listing-toolbar">
+          <h1 class="listing-toolbar-title">categories</h1>
+        </div>
+
+        <div class="category-grid">
+          <% if(categories.length > 0) { %>
+          <% categories.forEach(function(category) { %>
+            <article class="category-card">
+              <div class="category-card-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <%- include("partials/category-icon.ejs", { name: category.name }) %>
+                </svg>
+              </div>
+              <h3 class="category-card-title"><%= category.name %></h3>
+              <p class="category-card-description"><%= category.description %></p>
+            </article>
+          <% }) %>
+        <% } else { %>
+          <p class="empty-state">couldn't load categories right now</p>
+        <% } %>
+        </div>
+      </div>
+    </main>
+
+    <%- include("partials/footer.ejs") %>
+  </body>
+</html>
