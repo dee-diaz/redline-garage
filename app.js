@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('node:path');
 const PORT = process.env.PORT || 3000;
 const indexRouter = require('./routes/indexRouter');
+const categoriesRouter = require('./routes/categoriesRouter');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/', indexRouter);
+app.use('/categories', categoriesRouter);
 
 app.listen(PORT, (error) => {
   if (error) {
