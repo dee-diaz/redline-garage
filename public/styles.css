@@ -242,7 +242,7 @@ button {
   position: relative;
   background: var(--color-plaster);
   border-radius: var(--radius-cards);
-  padding: var(--card-padding);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
@@ -271,16 +271,14 @@ button {
 }
 
 .record-card-image {
-  height: 220px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: var(--spacing-16);
+  aspect-ratio: 4 / 3;
+  width: 100%;
 }
 
 .record-card-image img {
-  max-height: 100%;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .record-card-meta {
@@ -288,6 +286,7 @@ button {
   align-items: flex-start;
   gap: var(--spacing-12);
   text-align: left;
+  padding: var(--card-padding);
 }
 
 .record-card-thumb {
