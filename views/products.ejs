@@ -9,21 +9,17 @@
     <%- include("partials/errors.ejs") %>
     <div class="page-container">
       <div class="listing-toolbar">
-        <h1 class="listing-toolbar-title">featured products</h1>
+        <h1 class="listing-toolbar-title">products</h1>
       </div>
 
       <div class="listing-grid">
-        <% if(featuredProducts.length > 0) { %>
-          <% featuredProducts.forEach(function(product) { %>
+        <% if(products.length > 0) { %>
+          <% products.forEach(function(product) { %>
             <%- include("partials/productCard.ejs", { product }) %>
           <% }) %>
         <% } else { %>
           <p class="empty-state">couldn't load products right now</p>
         <% } %>
-      </div>
-
-      <div class="listing-footer">
-        <a href="/products" class="btn-see-all">see all</a>
       </div>
     </div>
   </main>

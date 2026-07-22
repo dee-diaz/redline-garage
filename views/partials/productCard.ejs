@@ -1,0 +1,19 @@
+<article class="record-card">
+  <% if (product.stock < 3 && product.stock > 0) { %>
+      <span class="record-card-badge record-card-badge--low-stock">low stock</span>
+    <% } %>
+    <% if (product.stock === 0) { %>
+      <span class="record-card-badge record-card-badge--no-stock">out of stock</span>
+  <% } %>
+  <div class="record-card-image">
+    <img src="<%= product.image %>" alt="" />
+  </div>
+  <div class="record-card-meta">
+    <div class="record-card-info">
+      <p class="record-card-category"><%= product.category %></p>
+      <h3 class="record-card-title"><%= product.name %></h3>
+      <p class="record-card-subtitle"><%= product.brand %></p>
+      <p class="record-card-price"><%= product.price %></p>
+    </div>
+  </div>
+</article>
