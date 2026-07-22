@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head.ejs") %>
+  <body>
+    <%- include("partials/header.ejs") %>
+
+    <main>
+      <%- include("partials/errors.ejs") %>
+
+      <div class="page-container">
+        <div class="listing-toolbar">
+          <h1 class="listing-toolbar-title">brands</h1>
+        </div>
+
+        <%
+          const brandDomains = {
+            "Nissan": "nissan.com",
+            "Toyota": "toyota.com",
+            "Mishimoto": "mishimoto.com",
+            "RAYS": "rayswheels.co.jp",
+            "Bride": "bride.jp",
+            "HKS": "hkspower.co.jp",
+            "Nismo": "nismo.co.jp",
+            "Greddy": "greddy.com",
+            "Tomei": "tomeiusa.com",
+            "BC Racing": "bcracing-na.com",
+            "Recaro": "recaro.com",
+            "Enkei": "enkei.com",
+            "Cusco": "cusco.co.jp",
+            "Blitz": "blitz.co.jp",
+            "Apexi": "apexi-usa.com",
+            "Voltex": "voltex.co.jp",
+            "Varis": "varis.jp",
+            "Tein": "tein.com",
+            "Endless": "endless-advance.co.jp",
+            "Defi": "defi.co.jp",
+            "Sparco": "sparco.com",
+            "Whiteline": "whiteline.com.au",
+            "K&N": "knfilters.com",
+            "Walbro": "walbro.com",
+            "AEM": "aemelectronics.com",
+          };
+        %>
+        <div class="brand-grid">
+          <% if(brands.length > 0) { %>
+          <% brands.forEach(function(brand) { %>
+            <% const domain = brandDomains[brand.name]; %>
+            <% const initials = brand.name.length <= 4 ? brand.name.toUpperCase() : brand.name.slice(0, 3).trim().toUpperCase(); %>
+            <article class="brand-card">
+              <div class="brand-card-mark">
+                <span class="brand-card-mark-text"><%= initials %></span>
+                <% if (domain) { %>
+                  <img
+                    class="brand-card-mark-logo"
+                    src="https://cdn.brandfetch.io/domain/<%= domain %>?c=<%= brandfetchClientId %>"
+                    alt=""
+                    loading="lazy"
+                    onerror="this.remove()"
+                  >
+                <% } %>
+              </div>
+              <div class="brand-card-info">
+                <h3 class="brand-card-name"><%= brand.name %></h3>
+                <p class="brand-card-country"><%= brand.country %></p>
+              </div>
+            </article>
+          <% }) %>
+        <% } else { %>
+          <p class="empty-state">couldn't load brands right now</p>
+        <% } %>
+        </div>
+      </div>
+    </main>
+
+    <%- include("partials/footer.ejs") %>
+  </body>
+</html>

@@ -20,7 +20,16 @@ async function getCategories() {
   return rows;
 }
 
+async function getBrands() {
+  const { rows } = await pool.query(
+    'SELECT name, country FROM brands ORDER BY name;',
+  );
+
+  return rows;
+}
+
 module.exports = {
   getFeaturedProducts,
   getCategories,
+  getBrands,
 };
