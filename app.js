@@ -20,6 +20,7 @@ app.use('/', indexRouter);
 app.use('/categories', categoriesRouter);
 app.use('/brands', brandsRouter);
 
+// Port listen
 app.listen(PORT, (error) => {
   if (error) {
     throw error;
