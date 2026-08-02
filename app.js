@@ -5,6 +5,7 @@ const PORT = process.env.PORT || 3000;
 const indexRouter = require('./routes/indexRouter');
 const categoriesRouter = require('./routes/categoriesRouter');
 const brandsRouter = require('./routes/brandsRouter');
+const productsRouter = require('./routes/productsRouter');
 
 const app = express();
 
@@ -19,8 +20,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', indexRouter);
 app.use('/categories', categoriesRouter);
 app.use('/brands', brandsRouter);
+app.use('/products', productsRouter);
 
-// Port listen
+
+// Start server
 app.listen(PORT, (error) => {
   if (error) {
     throw error;

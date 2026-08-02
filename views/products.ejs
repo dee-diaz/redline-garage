@@ -10,21 +10,139 @@
     <div class="page-container">
       <div class="listing-toolbar">
         <h1 class="listing-toolbar-title">products</h1>
+        <div class="listing-toolbar-actions">
+          <select class="sort-select" name="sort" aria-label="Sort products">
+            <option value="name-asc">name: a-z</option>
+            <option value="name-desc">name: z-a</option>
+            <option value="price-asc">price: low to high</option>
+            <option value="price-desc">price: high to low</option>
+          </select>
+        </div>
       </div>
 
-      <div class="listing-grid">
-        <% if(products.length > 0) { %>
-          <% products.forEach(function(product) { %>
-            <%- include("partials/productCard.ejs", { product }) %>
-          <% }) %>
-        <% } else { %>
-          <p class="empty-state">couldn't load products right now</p>
-        <% } %>
+      <div class="products-layout">
+        <aside class="filters-sidebar">
+          <form>
+            <div class="filters-group">
+              <div class="filters-group-header">
+                <h2 class="filters-group-title">category</h2>
+              </div>
+              <ul class="filters-options">
+                <% categories.forEach(function(category) { %>
+                  <li class="filters-option">
+                    <label>
+                      <input type="checkbox" name="category" value="<%= category.name %>">
+                      <span><%= category.name %></span>
+                    </label>
+                  </li>
+                <% }) %>
+              </ul>
+            </div>
+  
+            <div class="filters-group">
+              <div class="filters-group-header">
+                <h2 class="filters-group-title">brand</h2>
+              </div>
+              <ul class="filters-options">
+                <% brands.forEach(function(brand) { %>
+                  <li class="filters-option">
+                    <label>
+                      <input type="checkbox" name="brand" value="<%= brand.name %>">
+                      <span><%= brand.name %></span>
+                    </label>
+                  </li>
+                <% }) %>
+              </ul>
+            </div>
+  
+            <div class="filters-group">
+              <div class="filters-group-header">
+                <h2 class="filters-group-title">price</h2>
+              </div>
+              <div class="filters-price">
+                <input type="number" class="filters-price-input" name="minPrice" placeholder="min" min="0">
+                <span class="filters-price-sep">&ndash;</span>
+                <input type="number" class="filters-price-input" name="maxPrice" placeholder="max" min="0">
+              </div>
+            </div>
+  
+            <div class="filters-group">
+              <div class="filters-group-header">
+                <h2 class="filters-group-title">availability</h2>
+              </div>
+              <ul class="filters-options">
+                <li class="filters-option">
+                  <label>
+                    <input type="checkbox" name="inStock" value="true">
+                    <span>in stock only</span>
+                  </label>
+                </li>
+              </ul>
+            </div>
+          </form>
+
+          <button type="button" class="filters-clear">clear filters</button>
+        </aside>
+
+        <div class="products-content">
+          <div class="listing-grid">
+            <% if(products.length > 0) { %>
+              <% products.forEach(function(product, index) { %>
+                <% if (index < 20) { %>
+                  <%- include("partials/productCard.ejs", { product }) %>
+                <% } %>
+              <% }) %>
+            <% } else { %>
+              <p class="empty-state">couldn't load products right now</p>
+            <% } %>
+          </div>
+        </div>
       </div>
     </div>
   </main>
 
   <%- include("partials/footer.ejs") %>
 
+  <script>
+    const form = document.querySelector('.filters-sidebar form');
+    const baseUrl = 'http://localhost:3000'
+    const url = new URL('/products', baseUrl);
+
+    async function fetchData(url) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+            
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error('Fetch failed:', error);
+      }
+    }
+
+    form.addEventListener('change', (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const categories = formData.getAll('category');
+      const brands = formData.getAll('brand');
+      const minPrice = formData.get('minPrice');
+      const maxPrice = formData.get('maxPrice');
+      const availability = formData.get('inStock');
+      console.log(minPrice, maxPrice);
+    })
+
+    // checkboxes.forEach(checkbox => {
+    //   checkbox.addEventListener('change', (e) => {
+    //     if (checkbox.checked) {
+    //       const params = { category: checkbox.value };
+    //       url.search = new URLSearchParams(params).toString();
+    //       fetchData(url);
+    //     }
+    //   })
+    // });
+
+  </script>
 </body>
 </html>
