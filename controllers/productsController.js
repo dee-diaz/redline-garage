@@ -4,11 +4,20 @@ exports.productsGet = async (req, res) => {
   try {
     const title = 'Products | Redline Garage';
 
-    const { categoriesParams, brandsParams, priceParams, isInStockParams } =
-      req.query;
+    const selectedCategories = [].concat(req.query.category || []);
+    const selectedBrands = [].concat(req.query.brand || []);
+    const minPrice = req.query.minPrice || '';
+    const maxPrice = req.query.maxPrice || '';
+    const inStock = req.query.inStock === 'true';
 
-    let [products, categories, brands] = await Promise.all([
-      db.getProducts(),
+    const [products, categories, brands] = await Promise.all([
+      db.getProducts({
+        categories: selectedCategories,
+        brands: selectedBrands,
+        minPrice,
+        maxPrice,
+        inStock,
+      }),
       db.getCategories(),
       db.getBrands(),
     ]);
@@ -18,6 +27,11 @@ exports.productsGet = async (req, res) => {
       products,
       categories,
       brands,
+      selectedCategories,
+      selectedBrands,
+      minPrice,
+      maxPrice,
+      inStock,
     });
   } catch (error) {
     console.log(error);

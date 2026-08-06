@@ -22,7 +22,7 @@
 
       <div class="products-layout">
         <aside class="filters-sidebar">
-          <form>
+          <form method="get" action="/products">
             <div class="filters-group">
               <div class="filters-group-header">
                 <h2 class="filters-group-title">category</h2>
@@ -31,7 +31,7 @@
                 <% categories.forEach(function(category) { %>
                   <li class="filters-option">
                     <label>
-                      <input type="checkbox" name="category" value="<%= category.name %>">
+                      <input type="checkbox" name="category" value="<%= category.name %>" <%= selectedCategories.includes(category.name) ? 'checked' : '' %>>
                       <span><%= category.name %></span>
                     </label>
                   </li>
@@ -47,7 +47,7 @@
                 <% brands.forEach(function(brand) { %>
                   <li class="filters-option">
                     <label>
-                      <input type="checkbox" name="brand" value="<%= brand.name %>">
+                      <input type="checkbox" name="brand" value="<%= brand.name %>" <%= selectedBrands.includes(brand.name) ? 'checked' : '' %>>
                       <span><%= brand.name %></span>
                     </label>
                   </li>
@@ -60,9 +60,9 @@
                 <h2 class="filters-group-title">price</h2>
               </div>
               <div class="filters-price">
-                <input type="number" class="filters-price-input" name="minPrice" placeholder="min" min="0">
+                <input type="number" class="filters-price-input" name="minPrice" placeholder="min" min="0" value="<%= minPrice %>">
                 <span class="filters-price-sep">&ndash;</span>
-                <input type="number" class="filters-price-input" name="maxPrice" placeholder="max" min="0">
+                <input type="number" class="filters-price-input" name="maxPrice" placeholder="max" min="0" value="<%= maxPrice %>">
               </div>
             </div>
   
@@ -73,7 +73,7 @@
               <ul class="filters-options">
                 <li class="filters-option">
                   <label>
-                    <input type="checkbox" name="inStock" value="true">
+                    <input type="checkbox" name="inStock" value="true" <%= inStock ? 'checked' : '' %>>
                     <span>in stock only</span>
                   </label>
                 </li>
@@ -81,7 +81,7 @@
             </div>
           </form>
 
-          <button type="button" class="filters-clear">clear filters</button>
+          <a href="/products" class="filters-clear">clear filters</a>
         </aside>
 
         <div class="products-content">
@@ -105,44 +105,10 @@
 
   <script>
     const form = document.querySelector('.filters-sidebar form');
-    const baseUrl = 'http://localhost:3000'
-    const url = new URL('/products', baseUrl);
 
-    async function fetchData(url) {
-      try {
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-            
-        const data = await response.json();
-        console.log(data);
-      } catch (error) {
-        console.error('Fetch failed:', error);
-      }
-    }
-
-    form.addEventListener('change', (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const categories = formData.getAll('category');
-      const brands = formData.getAll('brand');
-      const minPrice = formData.get('minPrice');
-      const maxPrice = formData.get('maxPrice');
-      const availability = formData.get('inStock');
-      console.log(minPrice, maxPrice);
-    })
-
-    // checkboxes.forEach(checkbox => {
-    //   checkbox.addEventListener('change', (e) => {
-    //     if (checkbox.checked) {
-    //       const params = { category: checkbox.value };
-    //       url.search = new URLSearchParams(params).toString();
-    //       fetchData(url);
-    //     }
-    //   })
-    // });
-
+    form.addEventListener('change', () => {
+      form.requestSubmit();
+    });
   </script>
 </body>
 </html>
