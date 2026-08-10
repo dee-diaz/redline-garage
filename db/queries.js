@@ -28,8 +28,15 @@ async function getBrands() {
   return rows;
 }
 
+const SORT_OPTIONS = {
+  'name-asc': 'name ASC',
+  'name-desc': 'name DESC',
+  'price-asc': 'items.price ASC',
+  'price-desc': 'items.price DESC',
+};
+
 async function getProducts(filters = {}) {
-  const { categories, brands, minPrice, maxPrice, inStock } = filters;
+  const { categories, brands, minPrice, maxPrice, inStock, sort } = filters;
 
   const conditions = [];
   const values = [];
@@ -61,6 +68,8 @@ async function getProducts(filters = {}) {
   const whereClause =
     conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
+  const orderBy = SORT_OPTIONS[sort] || SORT_OPTIONS['name-asc'];
+
   const { rows } = await pool.query(
     `
     SELECT items.name AS name, items.price AS price, brands.name AS brand, categories.name AS category, items.image_url AS image, items.stock AS stock
@@ -68,7 +77,7 @@ async function getProducts(filters = {}) {
     LEFT JOIN categories ON items.category_id = categories.id
     LEFT JOIN brands ON items.brand_id = brands.id
     ${whereClause}
-    ORDER BY name;
+    ORDER BY ${orderBy};
   `,
     values,
   );

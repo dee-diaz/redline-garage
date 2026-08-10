@@ -12,10 +12,10 @@
         <h1 class="listing-toolbar-title">products</h1>
         <div class="listing-toolbar-actions">
           <select class="sort-select" name="sort" aria-label="Sort products">
-            <option value="name-asc">name: a-z</option>
-            <option value="name-desc">name: z-a</option>
-            <option value="price-asc">price: low to high</option>
-            <option value="price-desc">price: high to low</option>
+            <option value="name-asc" <%= sort === 'name-asc' ? 'selected' : '' %>>name: a-z</option>
+            <option value="name-desc" <%= sort === 'name-desc' ? 'selected' : '' %>>name: z-a</option>
+            <option value="price-asc" <%= sort === 'price-asc' ? 'selected' : '' %>>price: low to high</option>
+            <option value="price-desc" <%= sort === 'price-desc' ? 'selected' : '' %>>price: high to low</option>
           </select>
         </div>
       </div>
@@ -122,6 +122,14 @@
       });
 
       window.location.href = `${form.action}?${params.toString()}`;
+    });
+
+    const sortSelect = document.querySelector('.sort-select');
+
+    sortSelect.addEventListener('change', () => {
+      const params = new URLSearchParams(window.location.search);
+      params.set('sort', sortSelect.value);
+      window.location.href = `/products?${params.toString()}`;
     });
   </script>
 </body>

@@ -11,6 +11,7 @@ exports.productsGet = async (req, res) => {
     const minPrice = req.query.minPrice || '';
     const maxPrice = req.query.maxPrice || '';
     const inStock = req.query.inStock === 'true';
+    const sort = req.query.sort || 'name-asc';
 
     const [products, categories, brands] = await Promise.all([
       db.getProducts({
@@ -19,6 +20,7 @@ exports.productsGet = async (req, res) => {
         minPrice,
         maxPrice,
         inStock,
+        sort,
       }),
       db.getCategories(),
       db.getBrands(),
@@ -34,6 +36,7 @@ exports.productsGet = async (req, res) => {
       minPrice,
       maxPrice,
       inStock,
+      sort,
     });
   } catch (error) {
     console.log(error);
