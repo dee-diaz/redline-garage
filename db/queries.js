@@ -2,7 +2,7 @@ const pool = require('./pool');
 
 async function getFeaturedProducts() {
   const { rows } = await pool.query(`
-    SELECT items.name AS name, items.price AS price, brands.name AS brand, categories.name AS category, items.image_url AS image, items.stock AS stock
+    SELECT items.id AS id, items.name AS name, items.price AS price, brands.name AS brand, categories.name AS category, items.image_url AS image, items.stock AS stock
     FROM items
     LEFT JOIN categories ON items.category_id = categories.id
     LEFT JOIN brands ON items.brand_id = brands.id
@@ -72,7 +72,7 @@ async function getProducts(filters = {}) {
 
   const { rows } = await pool.query(
     `
-    SELECT items.name AS name, items.price AS price, brands.name AS brand, categories.name AS category, items.image_url AS image, items.stock AS stock
+    SELECT items.id AS id, items.name AS name, items.price AS price, brands.name AS brand, categories.name AS category, items.image_url AS image, items.stock AS stock
     FROM items
     LEFT JOIN categories ON items.category_id = categories.id
     LEFT JOIN brands ON items.brand_id = brands.id
@@ -85,9 +85,52 @@ async function getProducts(filters = {}) {
   return rows;
 }
 
+async function getProductDetails(id) {
+  const { rows } = await pool.query(
+    `
+    SELECT items.id AS id, items.name AS name, items.price AS price, brands.name AS brand, categories.name AS category, items.image_url AS image, items.stock AS stock
+    FROM items
+    LEFT JOIN categories ON items.category_id = categories.id
+    LEFT JOIN brands ON items.brand_id = brands.id
+    WHERE items.id = ${id}
+    `
+  )
+
+  return rows[0];
+}
+
+async function getRelatedProducts(id) {
+  const { rows: categoryRows } = await pool.query(
+    `
+    SELECT categories.name AS category
+    FROM items
+    LEFT JOIN categories ON items.category_id = categories.id
+    WHERE items.id = ${id}
+    `
+  );
+  const category = categoryRows[0]?.category;
+
+  const { rows } = await pool.query(
+    `
+    SELECT items.id AS id, items.name AS name, items.price AS price, brands.name AS brand, categories.name AS category, items.image_url AS image, items.stock AS stock
+    FROM items
+    LEFT JOIN categories ON items.category_id = categories.id
+    LEFT JOIN brands ON items.brand_id = brands.id
+    WHERE items.stock > 0 AND categories.name = $1
+    LIMIT 4;
+    `,
+    [category],
+  );
+
+  return rows;
+}
+
+
 module.exports = {
   getFeaturedProducts,
   getCategories,
   getBrands,
   getProducts,
+  getProductDetails,
+  getRelatedProducts,
 };

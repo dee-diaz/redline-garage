@@ -4,7 +4,8 @@ exports.productsGet = async (req, res) => {
   try {
     const title = 'Products | Redline Garage';
 
-    const parseMulti = (value) => ([].concat(value || []).flatMap((v) => v.split(',')));
+    const parseMulti = (value) =>
+      [].concat(value || []).flatMap((v) => v.split(','));
 
     const selectedCategories = parseMulti(req.query.category);
     const selectedBrands = parseMulti(req.query.brand);
@@ -37,6 +38,24 @@ exports.productsGet = async (req, res) => {
       maxPrice,
       inStock,
       sort,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: true, message: 'Internal server error' });
+  }
+};
+
+exports.productDetailsGet = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const product = await db.getProductDetails(id);
+    const relatedProducts = await db.getRelatedProducts(id);
+    const title = `${product.name} - ${product.brand} - Redline Garage`
+    res.render('single-product', {
+      title,
+      product,
+      relatedProducts,
     });
   } catch (error) {
     console.log(error);
