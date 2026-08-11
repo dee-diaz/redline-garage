@@ -788,6 +788,14 @@ button {
   letter-spacing: 0;
   font-size: var(--text-body-lg);
   color: var(--color-ink-black);
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .btn-primary {
