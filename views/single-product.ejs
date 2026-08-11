@@ -13,7 +13,7 @@
         <span class="product-breadcrumb-sep">/</span>
         <a href="/products">products</a>
         <span class="product-breadcrumb-sep">/</span>
-        <a href="/products?category=<%= product.category %>"><%= product.category %></a>
+        <a href="/products?category=<%= encodeURIComponent(product.category) %>"><%= product.category %></a>
         <span class="product-breadcrumb-sep">/</span>
         <span class="product-breadcrumb-current"><%= product.name %></span>
       </nav>
