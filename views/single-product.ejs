@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head.ejs") %>
+<body>
+
+  <%- include("partials/header.ejs") %>
+
+  <main>
+    <%- include("partials/errors.ejs") %>
+    <div class="page-container">
+      <nav class="product-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">home</a>
+        <span class="product-breadcrumb-sep">/</span>
+        <a href="/products">products</a>
+        <span class="product-breadcrumb-sep">/</span>
+        <a href="/products?category=<%= product.category %>"><%= product.category %></a>
+        <span class="product-breadcrumb-sep">/</span>
+        <span class="product-breadcrumb-current"><%= product.name %></span>
+      </nav>
+
+      <div class="product-detail">
+        <div class="product-gallery">
+          <div class="product-gallery-main">
+            <% if (product.stock < 3 && product.stock > 0) { %>
+              <span class="record-card-badge record-card-badge--low-stock">low stock</span>
+            <% } %>
+            <% if (product.stock === 0) { %>
+              <span class="record-card-badge record-card-badge--no-stock">out of stock</span>
+            <% } %>
+            <img src="<%= product.image %>" alt="<%= product.name %>" />
+          </div>
+        </div>
+
+        <div class="product-info">
+          <p class="product-info-category"><%= product.category %></p>
+          <h1 class="product-info-title"><%= product.name %></h1>
+
+          <div class="product-info-subline">
+            <span class="product-info-brand"><%= product.brand %></span>
+            <span class="product-info-sep">&middot;</span>
+            <span class="product-info-part">part #<%= product.partNumber %></span>
+          </div>
+
+          <div class="product-info-price-row">
+            <p class="product-info-price">$<%= product.price %></p>
+            <span class="stock-status <%= product.stock === 0 ? 'stock-status--out' : (product.stock < 3 ? 'stock-status--low' : 'stock-status--in') %>">
+              <%= product.stock === 0 ? 'out of stock' : (product.stock < 3 ? `only ${product.stock} left` : 'in stock') %>
+            </span>
+          </div>
+
+          <p class="product-info-description"><%= product.description %></p>
+
+          <dl class="product-specs">
+            <div class="product-specs-row">
+              <dt>brand</dt>
+              <dd><%= product.brand %></dd>
+            </div>
+            <div class="product-specs-row">
+              <dt>category</dt>
+              <dd><%= product.category %></dd>
+            </div>
+            <div class="product-specs-row">
+              <dt>part number</dt>
+              <dd><%= product.partNumber %></dd>
+            </div>
+            <div class="product-specs-row">
+              <dt>availability</dt>
+              <dd><%= product.stock > 0 ? `${product.stock} in stock` : 'out of stock' %></dd>
+            </div>
+          </dl>
+
+          <div class="product-actions">
+            <div class="quantity-stepper">
+              <button type="button" class="quantity-btn" aria-label="Decrease quantity">&minus;</button>
+              <input type="number" class="quantity-input" name="quantity" value="1" min="1" max="<%= product.stock %>" aria-label="Quantity" />
+              <button type="button" class="quantity-btn" aria-label="Increase quantity">&plus;</button>
+            </div>
+
+            <button type="button" class="btn-primary" <%= product.stock === 0 ? 'disabled' : '' %>>
+              add to cart
+            </button>
+
+            <button type="button" class="nav-icon-btn product-favorite-btn" aria-label="Add to favorites">
+              <svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <% if (relatedProducts && relatedProducts.length > 0) { %>
+        <div class="listing-toolbar">
+          <h2 class="listing-toolbar-title">related products</h2>
+        </div>
+
+        <div class="listing-grid">
+          <% relatedProducts.forEach(function(related) { %>
+            <%- include("partials/productCard.ejs", { product: related }) %>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+  </main>
+
+  <%- include("partials/footer.ejs") %>
+
+</body>
+</html>
