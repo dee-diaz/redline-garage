@@ -88,7 +88,7 @@ async function getProducts(filters = {}) {
 async function getProductDetails(id) {
   const { rows } = await pool.query(
     `
-    SELECT items.id AS id, items.name AS name, items.price AS price, brands.name AS brand, categories.name AS category, items.image_url AS image, items.stock AS stock
+    SELECT items.id AS id, items.name AS name, items.price AS price, brands.name AS brand, categories.name AS category, items.image_url AS image, items.stock AS stock, items.part_number AS "partNumber", items.description AS description
     FROM items
     LEFT JOIN categories ON items.category_id = categories.id
     LEFT JOIN brands ON items.brand_id = brands.id
