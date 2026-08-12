@@ -40,8 +40,11 @@ exports.productsGet = async (req, res) => {
       sort,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: true, message: 'Internal server error' });
+    console.error(error);
+    res.status(500).render('error', {
+      title: 'Error | Redline Garage',
+      message: 'Something went wrong. Please try again later.',
+    });
   }
 };
 
@@ -50,6 +53,14 @@ exports.productDetailsGet = async (req, res) => {
 
   try {
     const product = await db.getProductDetails(id);
+
+    if (!product) {
+      return res.status(404).render('error', {
+        title: 'Product not found | Redline Garage',
+        message: "This product doesn't exist or has been removed.",
+      });
+    }
+
     const relatedProducts = await db.getRelatedProducts(id);
     const title = `${product.name} - ${product.brand} - Redline Garage`
     res.render('single-product', {
@@ -58,7 +69,10 @@ exports.productDetailsGet = async (req, res) => {
       relatedProducts,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: true, message: 'Internal server error' });
+    console.error(error);
+    res.status(500).render('error', {
+      title: 'Error | Redline Garage',
+      message: 'Something went wrong. Please try again later.',
+    });
   }
 };

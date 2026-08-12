@@ -96,6 +96,10 @@ button {
   max-width: var(--page-max-width);
   margin: 0 auto;
   padding: 0 var(--spacing-40);
+
+  &:not(:has(.footer-links)) {
+    min-height: 89svh;
+  }
 }
 
 .icon {
