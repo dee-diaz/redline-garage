@@ -1,4 +1,4 @@
-const buttons = document.querySelectorAll('.wishlist-btn');
+const buttons = document.querySelectorAll('.wishlist-btn, .product-favorite-btn');
 
 buttons.forEach((button) => {
   button.addEventListener('click', (e) => {

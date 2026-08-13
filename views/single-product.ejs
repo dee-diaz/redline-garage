@@ -80,7 +80,7 @@
               add to cart
             </button>
 
-            <button type="button" class="nav-icon-btn product-favorite-btn" aria-label="Add to favorites">
+            <button type="button" class="nav-icon-btn product-favorite-btn <%= (wishlistIds.includes(product.id) ? 'is-active' : '') %>" data-product-id="<%= product.id %>" aria-label="Add to wishlist" aria-pressed="<%= wishlistIds.includes(product.id) %>">
               <svg class="icon" viewBox="0 0 24 24">
                 <path
                   d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"
@@ -98,7 +98,7 @@
 
         <div class="listing-grid">
           <% relatedProducts.forEach(function(related) { %>
-            <%- include("partials/productCard.ejs", { product: related }) %>
+            <%- include("partials/productCard.ejs", { product: related, wishlistIds }) %>
           <% }) %>
         </div>
       <% } %>

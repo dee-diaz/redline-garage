@@ -857,6 +857,10 @@ button {
   flex-shrink: 0;
 }
 
+.product-favorite-btn.is-active .icon {
+  fill: var(--color-ink-black);
+}
+
 @media (max-width: 900px) {
   .product-detail {
     grid-template-columns: 1fr;

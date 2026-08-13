@@ -89,7 +89,7 @@
             <% if(products.length > 0) { %>
               <% products.forEach(function(product, index) { %>
                 <% if (index < 20) { %>
-                  <%- include("partials/productCard.ejs", { product }) %>
+                  <%- include("partials/productCard.ejs", { product, wishlistIds }) %>
                 <% } %>
               <% }) %>
             <% } else { %>

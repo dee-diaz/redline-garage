@@ -2,6 +2,7 @@ const db = require('../db/queries');
 
 exports.productsGet = async (req, res) => {
   try {
+    const wishlistIds = await db.getWishlishIds();
     const title = 'Products | Redline Garage';
 
     const parseMulti = (value) =>
@@ -29,6 +30,7 @@ exports.productsGet = async (req, res) => {
 
     res.render('products', {
       title,
+      wishlistIds,
       products,
       categories,
       brands,
@@ -62,11 +64,13 @@ exports.productDetailsGet = async (req, res) => {
     }
 
     const relatedProducts = await db.getRelatedProducts(id);
+    const wishlistIds = await db.getWishlishIds();
     const title = `${product.name} - ${product.brand} - Redline Garage`
     res.render('single-product', {
       title,
       product,
       relatedProducts,
+      wishlistIds,
     });
   } catch (error) {
     console.error(error);

@@ -4,10 +4,12 @@ exports.wishlistGet = async (req, res) => {
   try {
     const title = 'Wishlist | Redline Garage';
     const wishlistItems = await db.getWishlist();
+    const wishlistIds = await db.getWishlishIds();
 
     res.render('wishlist', {
       title,
       wishlistItems,
+      wishlistIds,
     });
   } catch (error) {
     console.error(error);

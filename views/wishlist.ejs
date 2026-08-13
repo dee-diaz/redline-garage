@@ -15,7 +15,7 @@
       <div class="listing-grid">
         <% if(wishlistItems.length > 0) { %>
           <% wishlistItems.forEach(function(product) { %>
-            <%- include("partials/productCard.ejs", { product }) %>
+            <%- include("partials/productCard.ejs", { product, wishlistIds }) %>
           <% }) %>
         <% } else { %>
           <p class="empty-state">your wishlist is empty</p>

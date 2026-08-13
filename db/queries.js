@@ -142,6 +142,14 @@ async function getWishlist() {
   return rows;
 }
 
+async function getWishlishIds() {
+  const { rows } = await pool.query(
+    'SELECT item_id FROM wishlist_items;',
+  );
+
+  return rows.map((row) => row.item_id);
+}
+
 async function postWishlist(itemId) {
   const { rows } = await pool.query(
     `
@@ -178,4 +186,5 @@ module.exports = {
   getWishlist,
   postWishlist,
   deleteWishlist,
+  getWishlishIds,
 };
