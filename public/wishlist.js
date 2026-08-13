@@ -19,9 +19,11 @@ buttons.forEach((button) => {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ itemId: id }),
-      }).then(() => {
+      }).then((response) => {
+        if (!response.ok) return;
+
         if (window.location.pathname === '/wishlist') {
-          window.location.reload();
+          button.closest('.record-card')?.remove();
         }
       });
     }
