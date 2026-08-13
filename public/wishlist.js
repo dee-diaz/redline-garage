@@ -19,6 +19,10 @@ buttons.forEach((button) => {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ itemId: id }),
+      }).then(() => {
+        if (window.location.pathname === '/wishlist') {
+          window.location.reload();
+        }
       });
     }
   });
