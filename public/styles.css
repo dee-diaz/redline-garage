@@ -274,6 +274,29 @@ button {
   color: var(--color-pure-white);
 }
 
+.wishlist-btn {
+  position: absolute;
+  top: var(--spacing-12);
+  right: var(--spacing-12);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--color-pure-white);
+  border-radius: var(--radius-buttons);
+}
+
+.wishlist-btn .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.wishlist-btn.is-active .icon {
+  fill: var(--color-ink-black);
+}
+
 .record-card-image {
   aspect-ratio: 4 / 3;
   width: 100%;

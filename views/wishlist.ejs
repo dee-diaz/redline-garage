@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head.ejs") %>
+<body>
+
+  <%- include("partials/header.ejs") %>
+
+  <main>
+    <%- include("partials/errors.ejs") %>
+    <div class="page-container">
+      <div class="listing-toolbar">
+        <h1 class="listing-toolbar-title">wishlist</h1>
+      </div>
+
+      <div class="listing-grid">
+        <% if(wishlistItems.length > 0) { %>
+          <% wishlistItems.forEach(function(product) { %>
+            <%- include("partials/productCard.ejs", { product }) %>
+          <% }) %>
+        <% } else { %>
+          <p class="empty-state">your wishlist is empty</p>
+        <% } %>
+      </div>
+    </div>
+  </main>
+
+  <%- include("partials/footer.ejs") %>
+</body>
+</html>

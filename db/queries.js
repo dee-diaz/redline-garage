@@ -92,9 +92,10 @@ async function getProductDetails(id) {
     FROM items
     LEFT JOIN categories ON items.category_id = categories.id
     LEFT JOIN brands ON items.brand_id = brands.id
-    WHERE items.id = ${id}
-    `
-  )
+    WHERE items.id = $1
+    `,
+    [id],
+  );
 
   return rows[0];
 }
@@ -105,8 +106,9 @@ async function getRelatedProducts(id) {
     SELECT categories.name AS category
     FROM items
     LEFT JOIN categories ON items.category_id = categories.id
-    WHERE items.id = ${id}
-    `
+    WHERE items.id = $1
+    `,
+    [id],
   );
   const category = categoryRows[0]?.category;
 
@@ -125,6 +127,46 @@ async function getRelatedProducts(id) {
   return rows;
 }
 
+async function getWishlist() {
+  const { rows } = await pool.query(
+    `
+    SELECT items.id AS id, items.name AS name, items.price AS price, brands.name AS brand, categories.name AS category, items.image_url AS image, items.stock AS stock
+    FROM wishlist_items AS wishlist
+    INNER JOIN items ON items.id = wishlist.item_id
+    LEFT JOIN categories ON items.category_id = categories.id
+    LEFT JOIN brands ON items.brand_id = brands.id
+    ORDER BY wishlist.added_at DESC;
+    `,
+  );
+
+  return rows;
+}
+
+async function postWishlist(itemId) {
+  const { rows } = await pool.query(
+    `
+    INSERT INTO wishlist_items (item_id)
+    VALUES ($1)
+    RETURNING item_id, added_at;
+    `,
+    [itemId],
+  );
+
+  return rows[0];
+}
+
+async function deleteWishlist(itemId) {
+  const { rows } = await pool.query(
+    `
+    DELETE FROM wishlist_items
+    WHERE item_id = $1
+    RETURNING item_id, added_at;
+    `,
+    [itemId],
+  );
+
+  return rows[0];
+}
 
 module.exports = {
   getFeaturedProducts,
@@ -133,4 +175,7 @@ module.exports = {
   getProducts,
   getProductDetails,
   getRelatedProducts,
+  getWishlist,
+  postWishlist,
+  deleteWishlist,
 };
