@@ -1,6 +1,12 @@
 require("dotenv").config();
 const { Pool } = require("pg");
 
-module.exports = new Pool({
-  connectionString: `postgresql://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL
 });
+
+pool.on("connect", (client) => {
+  client.query("SET search_path TO public");
+});
+
+module.exports = pool;

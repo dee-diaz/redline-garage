@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "dev": "nodemon app",
     "db": "psql -U postgres -d auto_shop",
     "seed": "node db/populatedb.js",
@@ -22,6 +23,7 @@
   },
   "homepage": "https://github.com/dee-diaz/redline-garage#readme",
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
