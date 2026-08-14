@@ -66,7 +66,3 @@ The app runs on `http://localhost:3000` by default (or `$PORT` if set).
 | `npm run dev` | Run the app with nodemon (auto-restart) |
 | `npm run seed` | Populate the database with categories, brands, and products |
 | `npm run images` | Fetch and process product images |
-
-## Deployment
-
-Deployed on [Render](https://render.com) (free tier). Since the free tier spins down after 15 minutes of inactivity, a [cron-job.org](https://cron-job.org) job pings the site every 10 minutes to keep it awake.
